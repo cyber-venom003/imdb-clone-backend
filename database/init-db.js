@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const crew = require('../models/crew.model');
 const movie = require('../models/movie.model');
+const admin = require('../models/admin.model');
 
 var sequelize = new Sequelize(
     "imdb-database",
@@ -22,6 +23,7 @@ const dbConfig = {}
 dbConfig.sequelize = sequelize;
 dbConfig.crew = crew(sequelize , DataTypes);
 dbConfig.movie = movie(sequelize , DataTypes);
+dbConfig.admin = admin(sequelize , DataTypes);
 
 const actors_movies = sequelize.define('actors_movies' , {} , {timestamps: false});
 

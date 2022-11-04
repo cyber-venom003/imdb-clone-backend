@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { addMovie , getMovie, editMovie, deleteMovie } = require('../controllers/movie.controller');
+const { protect } = require('../middlewares/authMiddleware');
 const multer = require("multer");
 
 const fileStorageEngine = multer.diskStorage({
@@ -14,10 +15,10 @@ const fileStorageEngine = multer.diskStorage({
 
 const upload = multer({ storage: fileStorageEngine });
 
-router.post('/add' , upload.single('poster') , (req , res) => {console.log(req.file); addMovie(req , res)});
+router.post('/add' , protect , upload.single('poster') , (req , res) => {console.log(req.file); addMovie(req , res)});
 router.get('/' , getMovie);
 router.get('/:id' , getMovie);
-router.put('/:id/edit' , upload.single('poster') ,editMovie);
-router.delete('/:id/delete' , deleteMovie);
+router.put('/:id/edit' , protect , upload.single('poster') ,editMovie);
+router.delete('/:id/delete' , protect , deleteMovie);
 
 module.exports = router

@@ -4,7 +4,11 @@ const database = require('./database/init-db')
 const cors = require('cors');
 const crewRoutes = require('./routes/crew.route');
 const movieRoutes = require('./routes/movie.route');
+const adminRoutes = require('./routes/admin.route');
 const bodyParser = require('body-parser');
+const dotenv = require('dotenv')
+
+dotenv.config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -19,6 +23,7 @@ database.sequelize.sync({force: false}).then(() => {
 
 app.use('/crew' , crewRoutes);
 app.use('/movie' , movieRoutes);
+app.use('/admin' , adminRoutes);
 
 app.get('/' , (req , res) => {
     res.status(200).json({
