@@ -1,4 +1,4 @@
-const { crew } = require('../database/init-db');
+const { crew, movie } = require('../database/init-db');
 
 const addCrewMember = async (req , res) => {
     const name = req.body.name;
@@ -42,7 +42,7 @@ const viewCrewMember = async (req , res) => {
     const id = req.params.id;
     if (id){
         try {
-            const crewMember = await crew.findOne({where: {id: id}});
+            const crewMember = await crew.findOne({where: {id: id} , include: {model: movie, as: 'movies'}});
             res.status(200);
             return res.json({
                 'message': 'Crew Member fetched successfully!',
@@ -57,7 +57,7 @@ const viewCrewMember = async (req , res) => {
         }
     } else {
         try {
-            const crewMembers = await crew.findAll();
+            const crewMembers = await crew.findAll({include: {model: movie, as: 'movies'}});
             res.status(200);
             return res.json({
                 'message': 'Crew Member fetched successfully!',

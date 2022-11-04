@@ -25,9 +25,9 @@ dbConfig.movie = movie(sequelize , DataTypes);
 
 const actors_movies = sequelize.define('actors_movies' , {} , {timestamps: false});
 
-dbConfig.crew.belongsToMany(dbConfig.movie , {through: actors_movies});
-dbConfig.movie.belongsToMany(dbConfig.crew , {through: actors_movies});
-dbConfig.movie.belongsTo(dbConfig.crew , {foreignKey: 'producer_id' , as: "crew"});
+dbConfig.crew.belongsToMany(dbConfig.movie , {through: actors_movies , as: 'movies'});
+dbConfig.movie.belongsToMany(dbConfig.crew , {through: actors_movies , as: 'actors'});
+dbConfig.movie.belongsTo(dbConfig.crew , {foreignKey: 'producer_id' , as: "producer"});
 
 module.exports = dbConfig;
 
